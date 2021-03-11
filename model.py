@@ -120,5 +120,3 @@ class Model:
                     plt.close(fig)
 
                 iters += 1
-            if dali:
-                train_data.reset()

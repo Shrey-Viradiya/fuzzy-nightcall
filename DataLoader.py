@@ -2,7 +2,7 @@ import torch
 import torchvision
 from nvidia.dali.pipeline import Pipeline
 import nvidia.dali.ops as ops
-from nvidia.dali.plugin.pytorch import DALIClassificationIterator
+from nvidia.dali.plugin.pytorch import DALIClassificationIterator, LastBatchPolicy
 import nvidia.dali.types as types
 
 class HybridPipelineTrain(Pipeline):
@@ -22,7 +22,7 @@ class HybridPipelineTrain(Pipeline):
         self.rsz = ops.Resize(resize_x = output_size[0], resize_y = output_size[1], device = "gpu")
 
     def define_graph(self):
-        jpegs, labels = self.input()
+        jpegs, labels = self.input(name="Reader")
         images = self.decode(jpegs)
         images = self.rsz(images)
         images = self.flip(images, horizontal = self.coin())
@@ -39,7 +39,7 @@ def DataLoader(DATA_SIZE, batch_size, output_size, train_data_path, nvidiadali =
 
         ITERATIONS_PER_EPOCH = DATA_SIZE // batch_size
 
-        train_data_loader = DALIClassificationIterator([pipe], pipe.epoch_size("Reader"))
+        train_data_loader = DALIClassificationIterator([pipe], reader_name="Reader", last_batch_policy=LastBatchPolicy.PARTIAL, auto_reset=True)
     else:
         img_transforms = torchvision.transforms.Compose([
 	        torchvision.transforms.Resize(output_size),
