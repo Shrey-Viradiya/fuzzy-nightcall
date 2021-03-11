@@ -114,7 +114,7 @@ class Model:
                     plt.axis("off")
                     plt.imshow(np.transpose(vutils.make_grid(fake, padding=2, normalize=True),(1,2,0)))
                     plt.savefig(f"./progress/{epoch}_{iters}.png")
-                    torch.save(self.netD, "./models/{epoch}_{iters}.pkl")
+                    torch.save(self.netD, f"./models/{epoch}_{iters}.pkl")
                     np.save("./models/G_losses.npy", np.array(G_losses))
                     np.save("./models/D_losses.npy", np.array(D_losses))
                     plt.close(fig)
