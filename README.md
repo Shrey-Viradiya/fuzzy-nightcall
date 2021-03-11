@@ -1,2 +1,2 @@
 # fuzzy-nightcall
-PyTorch template repository for projects
+PyTorch template repository for PyTorch GAN Projects

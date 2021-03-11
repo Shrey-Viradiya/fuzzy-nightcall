@@ -1,0 +1,6 @@
+__pycache__
+paintbucket
+venv
+data
+progress
+models/*.pkl
