@@ -19,7 +19,7 @@ class HybridPipelineTrain(Pipeline):
                    )
         self.coin = ops.random.CoinFlip(probability = 0.5)
         self.flip = ops.Flip(device = "gpu")
-        self.rsz = ops.Resize(resize_x = output[0], resize_y = output[1], device = "gpu")
+        self.rsz = ops.Resize(resize_x = output_size[0], resize_y = output_size[1], device = "gpu")
 
     def define_graph(self):
         jpegs, labels = self.input()
@@ -30,16 +30,9 @@ class HybridPipelineTrain(Pipeline):
         # images are on the GPU
         return (images, labels)
 
-img_transforms = torchvision.transforms.Compose([
-	        torchvision.transforms.Resize(kwargs['image_size']),
-        	torchvision.transforms.RandomHorizontalFlip(),
-	        torchvision.transforms.ToTensor(),
-			torchvision.transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-	])
-
 # Create the dataloader
 
-def DataLoader(DATA_SIZE, batch_size, output_size, train_data_path, nvidiadali = false):
+def DataLoader(DATA_SIZE, batch_size, output_size, train_data_path, nvidiadali = False):
     if nvidiadali:
         pipe = HybridPipelineTrain(batch_size=batch_size, output_size = output_size, num_threads=2, device_id=0, images_directory=train_data_path)
         pipe.build()
@@ -50,7 +43,6 @@ def DataLoader(DATA_SIZE, batch_size, output_size, train_data_path, nvidiadali =
     else:
         img_transforms = torchvision.transforms.Compose([
 	        torchvision.transforms.Resize(output_size),
-			torchvision.transforms.CenterCrop(output_size),
         	torchvision.transforms.RandomHorizontalFlip(),
 	        torchvision.transforms.ToTensor(),
 			torchvision.transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),

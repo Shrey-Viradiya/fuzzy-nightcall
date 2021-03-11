@@ -25,13 +25,9 @@ class Generator(torch.nn.Module):
 			torch.nn.BatchNorm2d(generator_feature_map_size),
 			torch.nn.ReLU(True),
 			# state size. (generator_feature_map_size) x 64 x 64
-			torch.nn.ConvTranspose2d(generator_feature_map_size, generator_feature_map_size, 4, 2, 1, bias=False),
-			torch.nn.BatchNorm2d(generator_feature_map_size),
-			torch.nn.ReLU(True),
-			# state size. (generator_feature_map_size) x 128 x 128
 			torch.nn.ConvTranspose2d( generator_feature_map_size, output_channel, 4, 2, 1, bias=False),
             torch.nn.Tanh()
-            # state size. (output_channel) x 256 x 256
+            # state size. (output_channel) x 128 x 128
 		)
 
 	def forward(self, input):

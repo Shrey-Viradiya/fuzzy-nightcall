@@ -65,8 +65,6 @@ if __name__ == "__main__":
 		print("Using CPU")
 		device = torch.device("cpu")
 
-	dataloader = DataLoader()
-	
 	# Create batch of latent vectors that we will use to visualize
 	#  the progression of the generator
 	generator_feature_map_size = 64
@@ -74,9 +72,9 @@ if __name__ == "__main__":
 	target_channels = 3
 	latent_vector_size = 100
 	fixed_noise = torch.randn(64, latent_vector_size, 1, 1, device=device)
-	output_size = [256, 256]
+	output_size = [128, 128]
 
-	dataloader = DataLoader(datasize, kwargs['batch_size'], output_size, kwargs['data_dir'], True)
+	dataloader = DataLoader(70000, kwargs['batch_size'], output_size, kwargs['data_dir'], kwargs['nvidiadali'])
 
 	# Beta1 hyperparam for Adam optimizers
 	beta1 = 0.5
