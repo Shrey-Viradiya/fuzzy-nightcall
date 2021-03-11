@@ -39,7 +39,7 @@ def DataLoader(DATA_SIZE, batch_size, output_size, train_data_path, nvidiadali =
 
         ITERATIONS_PER_EPOCH = DATA_SIZE // batch_size
 
-        train_data_loader = DALIClassificationIterator([pipe], size=ITERATIONS_PER_EPOCH)
+        train_data_loader = DALIClassificationIterator([pipe], pipe.epoch_size("Reader"))
     else:
         img_transforms = torchvision.transforms.Compose([
 	        torchvision.transforms.Resize(output_size),

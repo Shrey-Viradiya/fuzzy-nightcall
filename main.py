@@ -85,4 +85,4 @@ if __name__ == "__main__":
 	optimizerD = torch.optim.Adam(model.netD.parameters(), lr=kwargs['learning_rate'], betas=(beta1, 0.999))
 	optimizerG = torch.optim.Adam(model.netG.parameters(), lr=kwargs['learning_rate'], betas=(beta1, 0.999))
 
-	model.train(dataloader, optimizerG, optimizerD, fixed_noise, epochs=kwargs['epoch'])
+	model.train(dataloader, optimizerG, optimizerD, fixed_noise, epochs=kwargs['epoch'], dali=kwargs['nvidiadali'])

@@ -35,9 +35,9 @@ class Model:
         checkpoint = len(train_data)//4
 
         for epoch in range(epochs):
-            start = time.time()
             # For each batch in the dataloader
             for i, data in enumerate(train_data):
+                start = time.time()
                 if dali:
                     d = data[0]
                     train_images, train_labels = d["data"], d["label"]
@@ -100,7 +100,7 @@ class Model:
 
                 # Output training stats
                 if i % checkpoint == 0:
-                    print(f"[{epoch}/{epochs}] [{i}/{len(train_data)}] \tLoss_D: {errD.item()} \tLoss_G: {errG.item()} \tD(x): {D_x} \tD(G(z)): {D_G_z1}/{D_G_z2}")
+                    print(f"[{epoch}/{epochs}] [{i}/{len(train_data)}] \tLoss_D: {errD.item()} \tLoss_G: {errG.item()} \tD(x): {D_x} \tD(G(z)): {D_G_z1}/{D_G_z2}\ttime:{time.time()-start}")
 
                 # Save Losses for plotting later
                 G_losses.append(errG.item())
